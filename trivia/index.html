@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <title>Trivia!</title>
+    <style>
+        .correct {
+            background-color: green;
+        }
+
+        .incorrect {
+            background-color: red;
+        }
+    </style>
+    <script>
+        function checkMultipleChoiceAnswer(selectedButtonId, correctButtonId) {
+            var selectedButton = document.getElementById(selectedButtonId);
+            var correctButton = document.getElementById(correctButtonId);
+            var messageElement = document.getElementById("multiple-choice-message");
+
+            if (selectedButton === correctButton) {
+                selectedButton.classList.add("correct");
+                messageElement.textContent = "Correct!";
+            } else {
+                selectedButton.classList.add("incorrect");
+                messageElement.textContent = "Incorrect";
+            }
+
+            // Disable all buttons after user selection
+            var buttons = document.getElementsByClassName("multiple-choice-button");
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].disabled = true;
+            }
+        }
+
+        function checkFreeResponseAnswer() {
+            var userInput = document.getElementById("free-response-input").value;
+            var messageElement = document.getElementById("free-response-message");
+
+            if (userInput.toLowerCase() === "correct answer") {
+                document.getElementById("free-response-input").classList.add("correct");
+                messageElement.textContent = "Correct!";
+            } else {
+                document.getElementById("free-response-input").classList.add("incorrect");
+                messageElement.textContent = "Incorrect";
+            }
+
+            // Disable input field and confirmation button after user submission
+            document.getElementById("free-response-input").disabled = true;
+            document.getElementById("free-response-button").disabled = true;
+        }
+    </script>
+</head>
+<body>
+    <div class="header">
+        <h1>Trivia!</h1>
+    </div>
+
+    <div class="container">
+        <div class="section">
+            <h2>Part 1: Multiple Choice </h2>
+            <hr>
+            <h3>What is the capital of France?</h3>
+            <button id="choice1" class="multiple-choice-button" onclick="checkMultipleChoiceAnswer('choice1', 'choice3')">New York</button>
+            <button id="choice2" class="multiple-choice-button" onclick="checkMultipleChoiceAnswer('choice2', 'choice3')">London</button>
+            <button id="choice3" class="multiple-choice-button" onclick="checkMultipleChoiceAnswer('choice3', 'choice3')">Paris</button>
+            <p id="multiple-choice-message"></p>
+        </div>
+
+        <div class="section">
+            <h2>Part 2: Free Response</h2>
+            <hr>
+            <h3>What is the capital of Germany?</h3>
+            <input type="text" id="free-response-input" placeholder="Enter your answer">
+            <button id="free-response-button" onclick="checkFreeResponseAnswer()">Confirm</button>
+            <p id="free-response-message"></p>
+        </div>
+    </div>
+</body>
+</html>
